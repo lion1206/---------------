@@ -76,8 +76,8 @@ def main():
     
     while True:
         print("\nВыберите действие:")
-        print("1. Зашифровать текст из файла")
-        print("2. Расшифровать текст из файла")
+        print("1. Зашифровать текст")
+        print("2. Расшифровать текст")
         print("3. Выход")
         
         choice = input("Ваш выбор (1-3): ")
@@ -97,7 +97,7 @@ def main():
             initial_key = prepare_text(initial_key)  # Подготавливаем ключ
             
             if choice == '1':
-                text = read_from_file("1.2/fraza.txt")
+                text = input("Введите текст: ")
                 if text:
                     prepared_text = prepare_text(text)
                     # Генерация самоключа
@@ -111,7 +111,7 @@ def main():
                     print(encrypted_text)
             
             else:
-                encrypted_text = read_from_file("1.2/nofraza.txt")
+                encrypted_text = input("Введите зашифрованный текст: ")
                 if encrypted_text:
                     # Расшифровка с использованием начального ключа
                     decrypted_text = vigenere_decrypt(encrypted_text, initial_key)

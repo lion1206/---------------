@@ -2,6 +2,23 @@ import math
 
 alphabet = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ"
 
+def preprocess_text(text):
+    """Подготовка текста: верхний регистр, замена знаков препинания"""
+    text = text.upper()
+    text = text.replace('.', 'ТЧК')
+    text = text.replace(',', 'ЗПТ')
+    text = text.replace(' ', 'ПРБ')
+    text = text.replace('Ё', 'Е')
+    # Удаляем символы, не входящие в алфавит
+    return ''.join(char for char in text if char in alphabet)
+
+def postprocess_text(text):
+    """Восстановление текста после расшифрования"""
+    text = text.replace('ЗПТ', ',')
+    text = text.replace('ТЧК', '.')
+    text = text.replace('ПРБ', ' ')
+    return text
+
 def is_prime(n):  
     if n <= 1:  
         return False  
@@ -39,6 +56,13 @@ def fi(n):
 
 def rsa():
     string = input("Введите сообщение: ")
+    string = preprocess_text(string)
+    
+    # Проверка, что в строке есть допустимые символы
+    if not string:
+        print("Сообщение не содержит символов из алфавита после обработки!")
+        return []
+    
     while True:
         P = int(input("Введите число P (простое): "))
         if not is_prime(P):
@@ -58,33 +82,76 @@ def rsa():
     f = fi(N)
     while True:
         e = int(input(f"Введите е, 1 < e < {f} взаимно простое с {f}: "))
+        if e <= 1 or e >= f:
+            print(f"e должно быть в интервале (1, {f})")
+            continue
+        if not is_coprime(f, e):
+            print(f"e и φ(N) должны быть взаимно простыми")
+            continue
         if f_d(e, f) == e:
             print("e не должно быть равно закрытому ключу, выберите другое значение e: ")
             continue
-        if is_coprime(f, e):
-            break
-        
+        break
         
     d = f_d(e, f)
     print(f"Открытый ключ (e={e}, N={N}), Закрытый ключ d={d}")
-    fin = [(alphabet.index(c) ** e) % N for c in string]
+    
+    # Шифрование каждого символа
+    fin = []
+    for c in string:
+        try:
+            char_index = alphabet.index(c)
+            encrypted_char = pow(char_index, e, N)
+            fin.append(encrypted_char)
+        except ValueError:
+            print(f"Пропущен недопустимый символ: {c}")
+    
     return fin
 
-def rsaun(string):
+def rsaun(encrypted_list):
     N = int(input("Введите число N: "))
     d = int(input("Введите d: "))
-    decoded = [(val ** d) % N for val in string]
-    return [alphabet[i] for i in decoded]
+    
+    decoded = []
+    for val in encrypted_list:
+        decrypted_index = pow(val, d, N)
+        decoded.append(alphabet[decrypted_index])
+    
+    decrypted_text = ''.join(decoded)
+    return postprocess_text(decrypted_text)
 
+# Основная программа
+encrypted_data = []
 
 while True:
-    choice = int(input("Выберите действие (1 - зашифровать, 2 - расшифровать, 3 - выход из программы): "))
-    if choice == 1:
-        nn = rsa()
-        print(f"Зашифрованное сообщение: {nn} ")
-    if choice == 2:
-        un = rsaun(nn)
-        print(f"Зашифрованное сообщение: {un} ")
-    elif choice == 3:
+    print("\n--- Меню ---")
+    print("1. Зашифровать сообщение")
+    print("2. Расшифровать сообщение")
+    print("3. Выход")
+    
+    choice = input("Выберите действие: ")
+    
+    if choice == '1':
+        encrypted_data = rsa()
+        if encrypted_data:
+            print(f"Зашифрованное сообщение: {encrypted_data}")
+            
+    elif choice == '2':
+        if not encrypted_data:
+            print("Сначала зашифруйте сообщение или введите данные вручную")
+            encrypted_input = input("Введите числа через пробел: ").split()
+            try:
+                encrypted_data = [int(x) for x in encrypted_input]
+            except ValueError:
+                print("Ошибка ввода! Используйте только целые числа")
+                continue
+                
+        decrypted_text = rsaun(encrypted_data)
+        print(f"Расшифрованное сообщение: {decrypted_text}")
+        
+    elif choice == '3':
+        print("Выход из программы.")
         break
-
+        
+    else:
+        print("Неверный выбор. Пожалуйста, выберите 1, 2 или 3.")

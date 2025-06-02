@@ -36,8 +36,9 @@ def encrypt(block_text, grille):
         for i in range(rows):
             for j in range(cols):
                 if current_grille[i][j] == 0:
-                    message_matrix[i][j] = block_text[text_pos]
-                    text_pos += 1
+                    if text_pos < len(block_text):
+                        message_matrix[i][j] = block_text[text_pos]
+                        text_pos += 1
         current_grille = rotate_grille(current_grille)
         if rotation % 2 == 0:
             current_grille = mirror_grille(current_grille)

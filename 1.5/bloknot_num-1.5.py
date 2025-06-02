@@ -10,6 +10,7 @@ def prepare_text(text):
     text = text.replace(" ", "").lower()  # Приводим к нижнему регистру
     text = text.replace(".", "тчк")
     text = text.replace(",", "зпт")
+    text = text.replace("ё", "е")
     return text
 
 # Функция для проверки параметров
