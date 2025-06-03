@@ -62,13 +62,8 @@ while True:
     print("\nВыберите:")
     print("1. Зашифровать текст")
     print("2. Расшифровать текст")
-    print("3. Выход")
 
-    choice = input("Ваш выбор от 1 до 3): ")
-
-    if choice == '3':
-        print("Программа завершена")
-        break
+    choice = input("Ваш выбор от 1 до 2): ")
 
     if choice in ['1', '2']:
         key = input("Введите ключ: ").upper()
@@ -86,8 +81,6 @@ while True:
             text = prepare_text(input("Введите текст:"))
             if text:
                 result = belaso_encrypt(text, key)
-                print("\nИсходный текст:")
-                print(text)
                 print("\nЗашифрованный текст:")
                 print(result)
 
@@ -97,9 +90,5 @@ while True:
             if text:
                 result = belaso_decrypt(text, key)
                 print("\nРасшифрованный текст:")
-                print(text)
-                print("\nЗашифрованный текст:")
                 print(result)
-    else:
-        print("Неверный выбор. Пожалуйста, выберите 1, 2 или 3")
 

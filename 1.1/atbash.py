@@ -51,7 +51,7 @@ def process_large_text(text, encrypt_func):
         result += format_output(processed_chunk) + " "
     return result.strip()
 
-while True:
+def main():
     print("\nВыберите:")
     print("1. Зашифровать текст")
     print("2. Расшифровать текст")
@@ -61,7 +61,7 @@ while True:
     
     if choice == '3':
         print("Программа завершена")
-        break
+        return 0
     
     if choice in ['1', '2']:
         if choice == '1':
@@ -83,5 +83,6 @@ while True:
             print(text)
             print("\nРасшифрованный текст:")
             print(result)
-    else:
-        print("Неверный выбор. Пожалуйста, выберите 1, 2 или 3")
+
+if __name__ == "__main__":
+    main()

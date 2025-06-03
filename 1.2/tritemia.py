@@ -57,13 +57,9 @@ while True:
     print("\nВыберите:")
     print("1. Зашифровать текст")
     print("2. Расшифровать текст")
-    print("3. Выход")
 
-    choice = input("Ваш выбор от (1 до 3): ")
+    choice = input("Ваш выбор от (1 до 2): ")
 
-    if choice == '3':
-        print("Программа завершена")
-        break
 
     if choice in ['1', '2']:
         if choice == '1':
@@ -71,8 +67,6 @@ while True:
             text = prepare_text(input("Введите текст:"))
             if text:
                 result = tritemius_encrypt(text)
-                print("\nИсходный текст:")
-                print(text)
                 print("\nЗашифрованный текст:")
                 print(result)
 
@@ -81,10 +75,7 @@ while True:
             text = prepare_text(input("Введите текст:"))
             if text:
                 result = tritemius_decrypt(text)
-                print("\nЗашифрованный текст:")
-                print(text)
                 print("\nРасшифрованный текст:")
                 print(result)
-    else:
-        print("Неверный выбор. Пожалуйста, выберите 1, 2 или 3")
+
 

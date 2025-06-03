@@ -121,13 +121,9 @@ while True:
     print("\nВыберите действие:")
     print("1. Зашифровать текст")
     print("2. Расшифровать текст")
-    print("3. Выход")
     
-    choice = input("Ваш выбор (от 1 до 3): ")
+    choice = input("Ваш выбор (от 1 до 2): ")
     
-    if choice == '3':
-        print("Программа завершена")
-        break
     
     if choice in ['1', '2']:
         while True:
@@ -150,8 +146,6 @@ while True:
                 prepared_text = prepare_text(text)
                 bigrams = split_into_bigrams(prepared_text)
                 result = playfair_encrypt(bigrams, matrix)
-                print("\nИсходный текст:")
-                print(text)
                 print("\nтекст в биграммах:")
                 print(' '.join(bigrams))
                 print("\nЗашифрованный текст:")
@@ -163,9 +157,5 @@ while True:
                 prepared_text = prepare_text(text)
                 bigrams = [prepared_text[i:i+2] for i in range(0, len(prepared_text), 2)]
                 result = playfair_decrypt(bigrams, matrix)
-                print("\nЗашифрованный текст:")
-                print(text)
                 print("\nРасшифрованный текст:")
                 print(' '.join(result))
-    else:
-        print("выберите 1, 2 или 3")

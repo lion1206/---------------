@@ -1,16 +1,9 @@
-def read_from_file(filename):
-    try:
-        with open(filename, 'r', encoding='utf-8') as file:
-            return file.read()
-    except FileNotFoundError:
-        print(f"Ошибка: Файл {filename} не найден")
-        return None
-
 def prepare_text(text):
     # Заменяем запятые и точки
     text = text.replace(',', 'зпт').replace('.', 'тчк')
     # Убираем пробелы
     text = text.replace(' ', '')
+    text = text.replace('ё', 'е')
     # Приводим текст к верхнему регистру
     text = text.upper()
     return text
@@ -80,12 +73,9 @@ def main():
         print("2. Расшифровать текст")
         print("3. Выход")
         
-        choice = input("Ваш выбор (1-3): ")
+        choice = input("Ваш выбор (1-2): ")
         
-        if choice == '3':
-            print("Программа завершена")
-            break
-        
+
         if choice in ['1', '2']:
             while True:
                 initial_key = input("Введите начальный ключ (одна буква): ")
@@ -103,8 +93,6 @@ def main():
                     # Генерация самоключа
                     self_key = generate_self_key(prepared_text, initial_key)
                     encrypted_text = vigenere_encrypt(prepared_text, self_key)
-                    print("\nИсходный текст:")
-                    print(text)
                     print("\nСамоключ:")
                     print(self_key)
                     print("\nЗашифрованный текст:")
@@ -117,12 +105,9 @@ def main():
                     decrypted_text = vigenere_decrypt(encrypted_text, initial_key)
                     # Восстанавливаем исходный текст (заменяем "зпт" и "тчк" обратно)
                     restored_text = restore_text(decrypted_text)
-                    print("\nЗашифрованный текст:")
-                    print(encrypted_text)
                     print("\nРасшифрованный текст:")
                     print(restored_text)
-        else:
-            print("Выберите 1, 2 или 3")
+
 
 if __name__ == "__main__":
     main()

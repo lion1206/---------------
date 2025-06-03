@@ -81,8 +81,6 @@ while True:
             text = input("Введите текст: ")
             prepared_text = prepare_text(text)
             result = process_large_text(prepared_text, polybius_encrypt)
-            print("\nИсходный текст:")
-            print(text)
             print("\nЗашифрованный текст:")
             print(result)
 
@@ -91,8 +89,6 @@ while True:
             text = input("Введите зашифрованный текст: ")
             prepared_text = prepare_text(text)
             result = process_large_text(prepared_text, polybius_decrypt)
-            print("\nЗашифрованный текст:")
-            print(text)
             print("\nРасшифрованный текст:")
             print(result)
 
